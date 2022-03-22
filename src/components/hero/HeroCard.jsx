@@ -11,7 +11,7 @@ const HeroCard = ({
 }) => {
     const imagePath = `/assets/${id}.jpg`;
     return (
-        <Link to={`./hero/${id}`} className="my-card">
+        <Link to={`/hero/${id}`} className="my-card">
             <img src={imagePath} className="img img-responsive" alt={superhero} />
             <div className="profile-name">{superhero}</div>
             <div className="profile-position">{alter_ego}</div>
