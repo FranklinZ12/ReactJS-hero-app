@@ -1,10 +1,8 @@
-import React, { Fragment } from 'react'
+import AppRouter from './routers/AppRouter'
 
 const HeroesApp = () => {
     return (
-        <Fragment>
-            <h1>HeroesApp</h1>
-        </Fragment>
+        <AppRouter />
     )
 }
 
