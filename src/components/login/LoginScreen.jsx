@@ -1,11 +1,26 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/authContext';
+import { types } from '../../types/types';
+
 
 const LoginScreen = () => {
     const navigate = useNavigate();
+    const { dispatch } = useContext(AuthContext);
 
     const handleLogin = () => {
-        navigate('/marvel', {
+        const action = {
+            type: types.login,
+            payload: {
+                name: 'Franklin'
+            }
+        };
+
+        dispatch(action);
+
+        const lastPath = localStorage.getItem('lastPath') || '/';
+
+        navigate(lastPath, {
             replace: true
         });
     };
