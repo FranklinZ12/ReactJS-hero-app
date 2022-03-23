@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useMemo } from 'react'
 import { useForm } from '../../hooks/useForm';
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { notify } from '../../selectors/toastInfo';
+import { notifyInfo } from '../../selectors/toastInfo';
 import HeroCard from '../hero/HeroCard';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getHeroesByName } from '../../selectors/getHeroesByName';
@@ -18,24 +18,24 @@ const SearchScreen = () => {
         });
     const { searchText } = values;
 
-    const heroesFilted = getHeroesByName(q);
+    const heroesFilted = useMemo(() => {
+        return getHeroesByName(q);
+    }, [q]);
 
     const handleSearch = (e) => {
         e.preventDefault();
         if (searchText.trim() <= 1) {
-            notify();
+            notifyInfo();
         };
         navigate(`?q=${searchText}`)
         // reset();
     }
     return (
         <Fragment>
-            <h1>Buscar héroes</h1>
+            <h1 className="text-center">Buscar héroes</h1>
             <hr />
-            <div className="row">
-                <div className="col-5">
-                    <h4 className="">Buscar</h4>
-                    <hr />
+            <div className="d-flex flex-column">
+                <div className="">
                     <form onSubmit={handleSearch}>
                         <input
                             type='text'
@@ -49,17 +49,25 @@ const SearchScreen = () => {
                         <button className="btn btn-outline-primary mt-2 btn-block"
                             type="submit"
                         >
-                            Buscar
+                            BUSCAR
                         </button>
                         <ToastContainer
                             transition={Zoom}
                         />
                     </form>
                 </div>
-
-                <div className="col-7">
+                <div className="mt-3 text-center">
                     <h4>Resultados</h4>
                     <hr />
+                </div>
+                <div className="d-flex flex-column flex-md-row flex-md-wrap justify-content-around">
+                    {
+                        (q === '')
+                            ? <div className="alert alert-info">Buscar heroe</div>
+                            : (heroesFilted.length === 0)
+                            && <div className="alert alert-info">No hay resultados con: {q}</div>
+                    }
+
                     {
                         heroesFilted.map(hero => (
                             <HeroCard

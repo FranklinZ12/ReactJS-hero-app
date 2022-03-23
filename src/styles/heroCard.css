@@ -60,6 +60,12 @@
     padding-left: 25px;
     padding-right: 25px;
 }
+
+.my-card .profile-overview span {
+    color: rgb(255, 255, 255);
+    padding-left: 135px;
+    padding-right: 75%;
+}
  
 .my-card:hover .profile-name {
     padding-left: 25px;
